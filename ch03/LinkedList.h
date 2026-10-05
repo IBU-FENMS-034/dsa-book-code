@@ -1,4 +1,4 @@
-// A singly linked list, with the same interface as the course repository's.
+// A singly linked list: the one Chapter 3 builds, operation by operation.
 #ifndef CH03_LINKEDLIST_H
 #define CH03_LINKEDLIST_H
 

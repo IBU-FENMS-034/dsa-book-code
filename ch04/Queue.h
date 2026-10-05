@@ -1,6 +1,6 @@
 // A queue: first in, first out. Elements join at the tail and leave at the
 // head, so the two ends do different jobs and the structure keeps a pointer
-// to each. Follows Code Repos/FENMS_034_2024-25/Week_03/include/Queue.h.
+// to each, so that neither end needs a walk to reach.
 #ifndef CH04_QUEUE_H
 #define CH04_QUEUE_H
 

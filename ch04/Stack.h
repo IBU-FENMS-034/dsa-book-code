@@ -2,8 +2,8 @@
 // why every one of them is O(1) and why the structure is worth having.
 //
 // The implementation is a singly linked chain whose head is the top of the
-// stack, so push is add-to-front and pop is remove-from-front. Follows
-// Code Repos/FENMS_034_2024-25/Week_03/include/Stack.h.
+// stack, so push is add-to-front and pop is remove-from-front, the two cheap
+// operations of Chapter 3's LinkedList.
 #ifndef CH04_STACK_H
 #define CH04_STACK_H
 
