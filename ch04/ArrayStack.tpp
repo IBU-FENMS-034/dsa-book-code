@@ -15,15 +15,19 @@ void ArrayStack<Data>::resize(int new_cap) {
 template <typename Data>
 void ArrayStack<Data>::push(const Data& value) {
     if (count == cap) resize(2 * cap);      // full: double it
-    items[count++] = value;                 // then store, and move top up
+    // then store, and move top up
+    items[count++] = value;
 }
 
 template <typename Data>
 Data ArrayStack<Data>::pop() {
-    if (count == 0) throw std::out_of_range("pop on an empty stack");
-    Data value = items[--count];            // move top down, then read
-    // A quarter rather than a half: halving at half means a program that
-    // pushes and pops across the boundary resizes on every operation.
+    if (count == 0)
+        throw std::out_of_range("Stack is empty");
+    // move top down, then read
+    Data value = items[--count];
+    // A quarter rather than a half: halving at half means a
+    // program that pushes and pops across the boundary
+    // resizes on every operation.
     if (count > 0 && count == cap / 4) resize(cap / 2);
     return value;
 }

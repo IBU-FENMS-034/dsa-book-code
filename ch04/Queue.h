@@ -21,9 +21,10 @@ public:
     Queue& operator=(Queue&& src) noexcept;
     ~Queue();
 
-    void enqueue(const Data& value);
+    void enqueue(const Data& data);
     Data dequeue();
     const Data& peek() const;
+    void reverse();
 
     int  size() const { return length; }
     bool is_empty() const { return head == nullptr; }

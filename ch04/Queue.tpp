@@ -3,12 +3,14 @@
 
 // ------------------------------------------------------- the two operations --
 template <typename Data>
-void Queue<Data>::enqueue(const Data& value) {
-    Node<Data>* node = new Node<Data>(value);
+void Queue<Data>::enqueue(const Data& data) {
+    Node<Data>* node = new Node<Data>(data);
     if (head == nullptr) {
-        head = tail = node;     // first element: it is both ends at once
+        // first element: it is both ends at once
+        head = tail = node;
     } else {
-        tail->next = node;      // no walk: the tail pointer is already there
+        // no walk: the tail pointer is already there
+        tail->next = node;
         tail = node;
     }
     ++length;
@@ -16,20 +18,38 @@ void Queue<Data>::enqueue(const Data& value) {
 
 template <typename Data>
 Data Queue<Data>::dequeue() {
-    if (head == nullptr) throw std::out_of_range("dequeue on an empty queue");
+    if (head == nullptr)
+        throw std::out_of_range("Queue is empty");
     Node<Data>* old_head = head;
-    Data value = old_head->data;
+    Data data = old_head->data;
     head = head->next;
-    if (head == nullptr) tail = nullptr;   // the queue is now empty
+    if (head == nullptr)    // the queue is now empty
+        tail = nullptr;
     delete old_head;
     --length;
-    return value;
+    return data;
 }
 
 template <typename Data>
 const Data& Queue<Data>::peek() const {
-    if (head == nullptr) throw std::out_of_range("peek on an empty queue");
+    if (head == nullptr)
+        throw std::out_of_range("Queue is empty");
     return head->data;
+}
+
+// Chapter 3's reverse, plus one line: the old head is the new tail.
+template <typename Data>
+void Queue<Data>::reverse() {
+    Node<Data>* previous = nullptr;
+    Node<Data>* current  = head;
+    tail = head;
+    while (current != nullptr) {
+        Node<Data>* next = current->next;
+        current->next = previous;
+        previous = current;
+        current  = next;
+    }
+    head = previous;
 }
 
 // ----------------------------------------------------------- housekeeping ---

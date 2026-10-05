@@ -18,12 +18,15 @@ inline bool balanced(const std::string& text) {
         if (c == '(' || c == '[' || c == '{') {
             open.push(c);
         } else if (c == ')' || c == ']' || c == '}') {
-            if (open.is_empty()) return false;    // a closer, nothing open
-            const char want = (c == ')') ? '(' : (c == ']') ? '[' : '{';
-            if (open.pop() != want) return false; // the wrong opener
+            // a closer, nothing open
+            if (open.is_empty()) return false;
+            const char want =
+                (c == ')') ? '(' : (c == ']') ? '[' : '{';
+            // the wrong opener
+            if (open.pop() != want) return false;
         }
     }
-    return open.is_empty();                       // nothing left unclosed
+    return open.is_empty();    // nothing left unclosed
 }
 
 // Evaluate a postfix expression of single integers and + - * /. Operands are
@@ -33,9 +36,13 @@ inline int evaluate_postfix(const std::string& expression) {
     std::istringstream in(expression);
     std::string token;
     while (in >> token) {
-        if (token == "+" || token == "-" || token == "*" || token == "/") {
-            if (operands.size() < 2) throw std::out_of_range("malformed expression");
-            const int right = operands.pop();       // the second operand came off first
+        const bool is_operator = token == "+" || token == "-"
+                              || token == "*" || token == "/";
+        if (is_operator) {
+            if (operands.size() < 2)
+                throw std::out_of_range("malformed expression");
+            // the second operand came off first
+            const int right = operands.pop();
             const int left  = operands.pop();
             if (token == "+") operands.push(left + right);
             if (token == "-") operands.push(left - right);

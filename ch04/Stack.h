@@ -24,16 +24,16 @@ public:
     Stack& operator=(Stack&& src) noexcept;
     ~Stack();
 
-    void push(const Data& value);
+    void push(const Data& data);
     Data pop();
     const Data& peek() const;
+    void reverse();
 
     int  size() const { return length; }
     bool is_empty() const { return top == nullptr; }
 
 private:
     void copy_from(const Node<Data>* src);
-    void reverse();
 
     Node<Data>* top{nullptr};
     int         length{0};

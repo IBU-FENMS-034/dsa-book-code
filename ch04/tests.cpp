@@ -55,10 +55,33 @@ int main() {
         check(q.dequeue() == 1 && q.dequeue() == 2 && q.dequeue() == 3,
               "dequeues come out in order");
         check(q.is_empty(), "the queue is empty again");
-        // Emptying must leave the tail dangling nowhere, or the next enqueue
-        // writes through a freed pointer. This is the bug the branch prevents.
+        // Emptying and refilling is the transition most likely to go wrong.
+        // enqueue tests head, not tail, so a stale tail would be overwritten
+        // here; dequeue clears it anyway so that tail is nullptr exactly when
+        // the queue is empty.
         q.enqueue(9);
         check(q.size() == 1 && q.peek() == 9, "the queue is reusable after emptying");
+    }
+
+    // ---- reverse, on both --------------------------------------------------
+    {
+        Stack<int> s{1, 2, 3, 4, 5};           // 5 is on top
+        s.reverse();
+        check(s.size() == 5 && s.pop() == 1 && s.pop() == 2,
+              "a reversed stack has its bottom on top");
+
+        Queue<int> q{1, 2, 3, 4, 5};
+        q.reverse();
+        check(q.peek() == 5, "a reversed queue has its tail at the head");
+        q.enqueue(6);   // only works if reverse moved the tail as well
+        int out[6], i = 0;
+        while (!q.is_empty()) out[i++] = q.dequeue();
+        check(i == 6 && out[0] == 5 && out[4] == 1 && out[5] == 6,
+              "and enqueue after reverse joins at the new tail");
+
+        Queue<int> empty;
+        empty.reverse();
+        check(empty.is_empty(), "reversing an empty queue does not crash");
     }
 
     // ---- the Rule of Five, on both -----------------------------------------

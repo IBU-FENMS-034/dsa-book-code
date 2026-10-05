@@ -3,8 +3,8 @@
 
 // ------------------------------------------------------- the two operations --
 template <typename Data>
-void Stack<Data>::push(const Data& value) {
-    Node<Data>* node = new Node<Data>(value);
+void Stack<Data>::push(const Data& data) {
+    Node<Data>* node = new Node<Data>(data);
     node->next = top;     // point it at the old top
     top = node;           // then make it the top
     ++length;
@@ -12,18 +12,21 @@ void Stack<Data>::push(const Data& value) {
 
 template <typename Data>
 Data Stack<Data>::pop() {
-    if (top == nullptr) throw std::out_of_range("pop on an empty stack");
+    if (top == nullptr)
+        throw std::out_of_range("Stack is empty");
     Node<Data>* old_top = top;
-    Data value = old_top->data;   // copy it out before the node is gone
+    // copy it out before the node is gone
+    Data data = old_top->data;
     top = top->next;
     delete old_top;
     --length;
-    return value;
+    return data;
 }
 
 template <typename Data>
 const Data& Stack<Data>::peek() const {
-    if (top == nullptr) throw std::out_of_range("peek on an empty stack");
+    if (top == nullptr)
+        throw std::out_of_range("Stack is empty");
     return top->data;
 }
 
