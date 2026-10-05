@@ -5,10 +5,12 @@
 #include <algorithm>
 #include <cstdio>
 #include <cstdlib>
+#include <iterator>
 #include <numeric>
 #include <stdexcept>
 #include <string>
 #include <utility>
+#include <vector>
 
 static int failures = 0;
 static void check(bool ok, const char* what) {
@@ -148,6 +150,11 @@ int main() {
         check(std::find(l.begin(), l.end(), 301) != l.end() &&
               std::find(l.begin(), l.end(), 7) == l.end(),
               "std::find finds what is there and only that");
+        check(std::distance(l.begin(), l.end()) == 3,
+              "std::distance counts the steps, using the five member types");
+        std::vector<int> copied(l.begin(), l.end());
+        check(copied == std::vector<int>{101, 201, 301},
+              "a vector can be built from the list's range");
 
         LinkedList<int> none;
         check(none.begin() == none.end(), "an empty list has begin() == end()");

@@ -7,15 +7,15 @@
 
 // An address is only a number, and std::uintptr_t is an
 // integer type guaranteed to be wide enough to hold one.
-static std::uintptr_t address_of(const int* p) {
+static std::uintptr_t address_of(const void* p) {
     return reinterpret_cast<std::uintptr_t>(p);
 }
 
 int main() {
     int scores[5] = {90, 72, 85, 61, 78};
 
-    std::printf("sizeof(int) = %zu bytes, scores holds %zu\n",
-                sizeof(int), sizeof(scores) / sizeof(scores[0]));
+    std::printf("one element = %zu bytes, scores holds %zu\n",
+                sizeof(scores[0]), sizeof(scores) / sizeof(scores[0]));
 
     const auto start = address_of(scores);
 
